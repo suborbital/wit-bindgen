@@ -48,6 +48,12 @@ enum Command {
         #[structopt(flatten)]
         common: Common,
     },
+    TinyGo {
+        #[structopt(flatten)]
+        opts: wit_bindgen_gen_tinygo::Opts,
+        #[structopt(flatten)]
+        common: Common,
+    },
     #[structopt(name = "spidermonkey")]
     SpiderMonkey {
         #[structopt(flatten)]
@@ -83,6 +89,7 @@ fn main() -> Result<()> {
         Command::Js { opts, common } => (Box::new(opts.build()), common),
         Command::C { opts, common } => (Box::new(opts.build()), common),
         Command::Markdown { opts, common } => (Box::new(opts.build()), common),
+        Command::TinyGo { opts, common } => (Box::new(opts.build()), common),
         Command::SpiderMonkey { opts, common } => {
             let js_source = std::fs::read_to_string(&opts.js)
                 .with_context(|| format!("failed to read {}", opts.js.display()))?;

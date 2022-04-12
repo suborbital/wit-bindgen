@@ -576,3 +576,19 @@ pub fn runtime_tests_wasmtime(_input: TokenStream) -> TokenStream {
 
     (quote::quote!(#(#tests)*)).into()
 }
+
+#[proc_macro]
+#[cfg(feature = "wit-bindgen-gen-tinygo")]
+pub fn codegen_tinygo_export(input: TokenStream) -> TokenStream {
+    gen_verify(input, Direction::Export, "export", || {
+        wit_bindgen_gen_tinygo::Opts::default().build()
+    })
+}
+
+#[proc_macro]
+#[cfg(feature = "wit-bindgen-gen-tinygo")]
+pub fn codegen_tinygo_import(input: TokenStream) -> TokenStream {
+    gen_verify(input, Direction::Import, "import", || {
+        wit_bindgen_gen_tinygo::Opts::default().build()
+    })
+}
